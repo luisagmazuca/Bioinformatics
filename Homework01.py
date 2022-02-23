@@ -18,6 +18,7 @@ For each major repeat, record in a Tab delimitated file:
 3. Starting base # for each occurrence
 4. Closing base # for each occurrence """
 
+import re
 #Open file 
 file1 = open("C:\\Users\\luisa\\Documents\\Spring 2022\\BINF II\\Lab\\Mycobacterium_phage_Airmid.fasta", "r")
 fasta = file1.read()
@@ -37,6 +38,7 @@ def get_sequence(sequence):
     return seq
 
 comp_seq= get_sequence(fasta)
+seq_list = [comp_seq]
 
 #Function to get fragments of 10 aa (sliding window)
 def get_window(sequence, start_index, window_size):
@@ -51,6 +53,25 @@ def get_window(sequence, start_index, window_size):
 test = get_window(comp_seq, 0, 10)
 
 #Function to search for specific fragment inside the complete sequence
+def find_repeat(sequence, fragment):
+    count = 0
+    for aa in sequence:
+        match = re.findall("(%s)" % fragment, aa)
+        if match:
+            count +=1
+    return count
+
+test2 = find_repeat(seq_list, test)
+
+#Function to find indexes
+def find_index(sequence, fragment):
+    for aa in sequence:
+        match = re.match("(%s)" % fragment, aa)
+        if match:
+            index = match.span()
+    return index
+    
+test3 = find_index(seq_list, test)
 
 #functio  to create file
 
