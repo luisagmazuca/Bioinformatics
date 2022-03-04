@@ -4,22 +4,13 @@ Created on Wed Mar  2 19:44:39 2022
 
 @author: luisa
 """
-"""Part 2:
-Extract CDS (coding sequence) information from GenBank file, place into tab delimitated file
-1. The phage name
-2. the full aa sequence of the protein
-3. the starting base # for the first codon
-4. the closing base # for the third nt of the last codon
-5. The orientation of the gene (positive or negative strand).
-6. the gene name
-7. the gene description (“product”)"""
-
+#Homework 1
+#Part2
 import re
 #Open file 
 file1 = open("C:\\Users\\luisa\\Documents\\Spring 2022\\BINF II\\Lab\\Mycobacterium_phage_Airmid.gb", "r")
 gbfile = file1.read()
 
-#
 def get_all_matched(pattern, sequence, start_index):
     store = ""
     s= " "
@@ -65,6 +56,10 @@ for line in translation_string:
     if translation_string[i].startswith("translation"):
         translation_full.append(merge)
 
+translation1 = []        
+for line in translation_full:
+    translation1.append(line.replace("translation", ""))
+    
 #3 & 4 star and end
 start_end = get_all_matched(r"(CDS)", gb_list, 0)
 st_end_list= start_end.splitlines()
@@ -80,6 +75,26 @@ for line in st_end_list:
 gene= get_all_matched(r"(/gene)", gb_list, 0)
 gene_list= gene.splitlines()
 
+gn= ""
+gene1= []
+for line in gene_list:
+    gn= line.replace("/gene=", "")
+    if gn not in gene1:
+        gene1.append(gn)
+
 #7 description -> product
 prod= get_all_matched(r"(/product)", gb_list, 0)
 product= prod.splitlines()
+
+pr= ""
+product1= []
+for line in product:
+    pr= line.replace("/product=", "")
+    product1.append(pr)
+
+with open("C:\\Users\\luisa\\Documents\\Spring 2022\\BINF II\\Lab\\file1.tsv", "a+") as f:
+    f.write(phage)
+    f.write("sequence" + "\t" + "start,end" + "\t" + "gene" + "\t" + "description" + "\n")
+for i in range(len(translation_full)):
+    with open("C:\\Users\\luisa\\Documents\\Spring 2022\\BINF II\\Lab\\file1.tsv", "a+") as f:
+        f.write(translation1[i] + "\t" + startend[i] + "\t" + gene1[i] + "\t" + product1[i] + "\n")
