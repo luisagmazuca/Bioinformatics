@@ -1,40 +1,42 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Mar 17 23:01:53 2022
+Created on Sat Mar 19 14:25:09 2022
 
 @author: luisa
 """
-#Helicobacyer Pilory
+#Rebeuca
+
 import re
-file= open("C:\\Users\\luisa\\Documents\\Spring 2022\\BINF II\\Lab\\lab04\\hp.predict", "r")
-hp = file.read()
+file= open("C:\\Users\\luisa\\Documents\\Spring 2022\\BINF II\\Lab\\lab04\\rebeuca.predict", "r")
+rebeuca = file.read()
 
-hp1= hp.splitlines()
+rebeuca1= rebeuca.splitlines()
 
-hp_list= [] #create 2D list
-for line in hp1: 
-    hp_list.append(line.split())
+rebeuca_list= [] #create 2D list
+for line in rebeuca1: 
+    rebeuca_list.append(line.split())
 
+#Extract information from predict file from GLimmer (orf, start, and stop)
 orfs= []
-for i in range(len(hp_list)):
-    orfs.append(hp_list[i][0])
+for i in range(len(rebeuca_list)):
+    orfs.append(rebeuca_list[i][0])
 
 start = []
-for i in range(len(hp_list)):
-    start.append(hp_list[i][1])
+for i in range(len(rebeuca_list)):
+    start.append(rebeuca_list[i][1])
     
 stop = []
-for i in range(len(hp_list)):
-    stop.append(hp_list[i][2])
+for i in range(len(rebeuca_list)):
+    stop.append(rebeuca_list[i][2])
 
-file2= open("C:\\Users\\luisa\\Documents\\Spring 2022\\BINF II\\Lab\\lab04\\hp.gb", "r")
-hp2 = file2.read()
+file2= open("C:\\Users\\luisa\\Documents\\Spring 2022\\BINF II\\Lab\\lab04\\rebeuca.gb", "r")
+rebeuca2 = file2.read()
 
-hp_2 = hp2.splitlines()
+rebeuca_2 = rebeuca2.splitlines()
 
-hp2_list= [] #create 2D list
-for line in hp_2: 
-    hp2_list.append(line.split())
+rebeuca2_list= [] #create 2D list
+for line in rebeuca_2: 
+    rebeuca2_list.append(line.split())
 
 def get_all_matched(pattern, sequence, start_index):
     store = ""
@@ -47,7 +49,7 @@ def get_all_matched(pattern, sequence, start_index):
                 store += string + "\n"
     return store
 
-cds = get_all_matched(r"(CDS)", hp2_list, 1)
+cds = get_all_matched(r"(CDS)", rebeuca2_list, 1)
 cds1 = cds.splitlines()
 
 start_end= []
@@ -92,13 +94,15 @@ stop_gb= []
 for i in range(len(cds_list)):
     if len(cds_list[i]) > 0:
         stop_gb.append(cds_list[i][1])
-    
+
+#Extract information from GenBank file    
 import csv
 
-with open("C:\\Users\\luisa\\Documents\\Spring 2022\\BINF II\\Lab\\lab04\\Comparisions.csv", newline="") as f:
+with open("C:\\Users\\luisa\\Documents\\Spring 2022\\BINF II\\Lab\\lab04\\Comparisions_Rebeuca.csv", newline="") as f:
     reader = csv.reader(f)
     data = list(reader)
-    
+
+#Generates comments from a CSV file
 comments= []
 comment= ""
 for i in range(len(data)):

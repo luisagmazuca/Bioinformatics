@@ -45,8 +45,6 @@ def get_window(sequence, start_index, window_size):
             i+=1
     return window
 
-#test = get_window(comp_seq, 10, 10)
-
 #Function to search for specific fragment inside the complete sequence
 def get_repeat(sequence, fragment):
     count = 0
@@ -71,7 +69,6 @@ def write_doc(data):
         f.write(data[0] + "\t" + data[1] + "\t" + data[2] + "\t" + data[3] + "\n")
 
 #Loop to call all funtions
-
 start= 0 #start index in the string
 size= 10 #size of the sliding window, will be input for function get_window
 check_repeats= [] #empty list to store repeats to make sure they are not repeated
